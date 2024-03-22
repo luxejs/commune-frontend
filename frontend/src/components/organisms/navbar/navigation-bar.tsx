@@ -52,26 +52,26 @@ const userNavigation = [
 	{ name: 'Settings', href: '#' },
 ]
 
-const items: MenuProps['items'] = [
-	{
-		key: '1',
-		label: (
-			<span rel="noopener noreferrer" className="flex items-center">
-				Pay with Stripe
-				<Image src={StripeImage} alt="stripeImage" width={24} height={24} className="rounded-md ml-auto" />
-			</span>
-		),
-	},
-	{
-		key: '2',
-		label: (
-			<span rel="noopener noreferrer" className="flex items-center" >
-				Pay with Wallet
-				<Image src={MetaMaskImage} alt="MetaMaskImage" width={24} height={24} className="rounded-md ml-2" />
-			</span>
-		),
-	},
-]
+// const items: MenuProps['items'] = [
+// 	{
+// 		key: '1',
+// 		label: (
+// 			<span rel="noopener noreferrer" className="flex items-center">
+// 				Pay with Stripe
+// 				<Image src={StripeImage} alt="stripeImage" width={24} height={24} className="rounded-md ml-auto" />
+// 			</span>
+// 		),
+// 	},
+// 	{
+// 		key: '2',
+// 		label: (
+// 			<span rel="noopener noreferrer" className="flex items-center" >
+// 				Pay with Wallet
+// 				<Image src={MetaMaskImage} alt="MetaMaskImage" width={24} height={24} className="rounded-md ml-2" />
+// 			</span>
+// 		),
+// 	},
+// ]
 
 export default function NavigationBar() {
 	const [isShowWalletPaymentModal, setIsShowWalletPaymentModal] = useState(false)
@@ -110,14 +110,14 @@ export default function NavigationBar() {
 		setIsShowWalletPaymentModal(true)
 	}
 
-	const onClick: MenuProps['onClick'] = ({ key }) => {
-		if (key === '1') {
-			handleClickPayButton()
-		}
-		if (key === '2') {
-			handleMetaMaskPayment()
-		}
-	};
+	// const onClick: MenuProps['onClick'] = ({ key }) => {
+	// 	if (key === '1') {
+	// 		handleClickPayButton()
+	// 	}
+	// 	if (key === '2') {
+	// 		handleMetaMaskPayment()
+	// 	}
+	// };
 
 	const handleWalletPaymentModalOpen = () => {
 		setIsShowWalletPaymentModal(false)
@@ -381,7 +381,7 @@ export default function NavigationBar() {
 
 											</Menu>
 
-											{/* <Menu as="div" className="mx-3">
+											<Menu as="div" className="mx-3">
 												<div>
 													<Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
 														<span className="absolute -inset-1.5" />
@@ -420,11 +420,11 @@ export default function NavigationBar() {
 													</Menu.Items>
 												</Transition>
 
-											</Menu> */}
+											</Menu>
 
-											{/* <div className={classes.themeTogglerWrapper} style={{ marginLeft: '0.1rem' }}> */}
+											<div className={classes.themeTogglerWrapper} style={{ marginLeft: '0.1rem' }}>
 											<ThemeToggler />
-											{/* </div> */}
+											</div>
 										</div>
 									</div>
 									<div className="flex xl:hidden">
