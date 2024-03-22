@@ -74,12 +74,12 @@ const community = [
 // ]
 
 export default function NavigationBar() {
-	const [isShowWalletPaymentModal, setIsShowWalletPaymentModal] = useState(false)
+	// const [isShowWalletPaymentModal, setIsShowWalletPaymentModal] = useState(false)
 	const [destinationAddress, setDestinationAddress] = useState('')
 	const [amount, setAmount] = useState('')
 	// const [tokenType, setTokenType] = useState('')
 	// const [selectedChain, setSelectedChain] = useState('')
-	const [isShowConnectWithSubstrateModalOpen, setIsShowConnectWithSubstrateModalOpen] = useState(false)
+	// const [isShowConnectWithSubstrateModalOpen, setIsShowConnectWithSubstrateModalOpen] = useState(false)
 	// const asyncStripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 	// const { abi: erc20ABI } = erc20ContractABI
 	// const router = useRouter();
