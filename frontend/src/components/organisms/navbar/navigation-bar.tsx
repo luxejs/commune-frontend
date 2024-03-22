@@ -2,12 +2,12 @@ import { Fragment, useState, useEffect } from 'react'
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import { Modal, Space, Select } from 'antd';
 import { IoSettingsSharp } from "react-icons/io5";
 import { parseEther } from 'viem'
@@ -80,9 +80,9 @@ export default function NavigationBar() {
 	const [tokenType, setTokenType] = useState('')
 	const [selectedChain, setSelectedChain] = useState('')
 	const [isShowConnectWithSubstrateModalOpen, setIsShowConnectWithSubstrateModalOpen] = useState(false)
-	const asyncStripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+	// const asyncStripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 	const { abi: erc20ABI } = erc20ContractABI
-	const router = useRouter();
+	// const router = useRouter();
 
 	// const handleClickPayButton = async () => {
 	// 	try {
