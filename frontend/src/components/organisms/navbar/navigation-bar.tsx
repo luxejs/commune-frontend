@@ -84,31 +84,31 @@ export default function NavigationBar() {
 	const { abi: erc20ABI } = erc20ContractABI
 	const router = useRouter();
 
-	const handleClickPayButton = async () => {
-		try {
-			const amount = 1;
-			const stripe = await asyncStripe;
-			const res = await fetch("/api/stripe/session", {
-				method: "POST",
-				body: JSON.stringify({
-					amount,
-				}),
-				headers: { "Content-Type": "application/json" },
-			});
-			const { sessionId } = await res.json();
-			const result = await stripe?.redirectToCheckout({ sessionId });
-			// Check if 'error' exists in the result
-			if (result?.error) {
-				router.push("/error");
-			}
-		} catch (err) {
-			router.push("/error");
-		}
-	};
+	// const handleClickPayButton = async () => {
+	// 	try {
+	// 		const amount = 1;
+	// 		const stripe = await asyncStripe;
+	// 		const res = await fetch("/api/stripe/session", {
+	// 			method: "POST",
+	// 			body: JSON.stringify({
+	// 				amount,
+	// 			}),
+	// 			headers: { "Content-Type": "application/json" },
+	// 		});
+	// 		const { sessionId } = await res.json();
+	// 		const result = await stripe?.redirectToCheckout({ sessionId });
+	// 		// Check if 'error' exists in the result
+	// 		if (result?.error) {
+	// 			router.push("/error");
+	// 		}
+	// 	} catch (err) {
+	// 		router.push("/error");
+	// 	}
+	// };
 
-	const handleMetaMaskPayment = () => {
-		setIsShowWalletPaymentModal(true)
-	}
+	// const handleMetaMaskPayment = () => {
+	// 	setIsShowWalletPaymentModal(true)
+	// }
 
 	// const onClick: MenuProps['onClick'] = ({ key }) => {
 	// 	if (key === '1') {
@@ -119,83 +119,83 @@ export default function NavigationBar() {
 	// 	}
 	// };
 
-	const handleWalletPaymentModalOpen = () => {
-		setIsShowWalletPaymentModal(false)
-	}
+	// const handleWalletPaymentModalOpen = () => {
+	// 	setIsShowWalletPaymentModal(false)
+	// }
 
-	const handleChange = (value: string) => {
-		setTokenType(value)
-	};
+	// const handleChange = (value: string) => {
+	// 	setTokenType(value)
+	// };
 
-	const { data: hash, sendTransaction } = useSendTransaction()
+	// const { data: hash, sendTransaction } = useSendTransaction()
 
-	const { data: txHashUSDT, write: paywithUSDT } = useContractWrite({
-		address: '0x28B3071bE7A6E4B3bE2b36D78a29b6e4DbBdDb74',
-		abi: erc20ABI,
-		functionName: 'transfer'
-	})
+	// const { data: txHashUSDT, write: paywithUSDT } = useContractWrite({
+	// 	address: '0x28B3071bE7A6E4B3bE2b36D78a29b6e4DbBdDb74',
+	// 	abi: erc20ABI,
+	// 	functionName: 'transfer'
+	// })
 
-	const { data: txHashUSDC, write: paywithUSDC } = useContractWrite({
-		address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-		abi: erc20ABI,
-		functionName: 'transfer'
-	})
+	// const { data: txHashUSDC, write: paywithUSDC } = useContractWrite({
+	// 	address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+	// 	abi: erc20ABI,
+	// 	functionName: 'transfer'
+	// })
 
-	const handlePayWithWallet = () => {
-		if (tokenType === 'eth') {
-			sendTransaction({ to: destinationAddress, value: parseEther(amount) })
-		}
-		if (tokenType === 'matic') {
-			if (selectedChain !== 'Polygon') {
-				window.alert('Please change your chain to Polygon')
-			} else {
-				sendTransaction({ to: destinationAddress, value: parseEther(amount) })
-			}
-		}
-		if (tokenType === 'usdt') {
-			paywithUSDT({ args: [destinationAddress, amount] });
-		}
-		if (tokenType === 'usdc') {
-			paywithUSDC({ args: [destinationAddress, amount] });
-		}
-	}
+	// const handlePayWithWallet = () => {
+	// 	if (tokenType === 'eth') {
+	// 		sendTransaction({ to: destinationAddress, value: parseEther(amount) })
+	// 	}
+	// 	if (tokenType === 'matic') {
+	// 		if (selectedChain !== 'Polygon') {
+	// 			window.alert('Please change your chain to Polygon')
+	// 		} else {
+	// 			sendTransaction({ to: destinationAddress, value: parseEther(amount) })
+	// 		}
+	// 	}
+	// 	if (tokenType === 'usdt') {
+	// 		paywithUSDT({ args: [destinationAddress, amount] });
+	// 	}
+	// 	if (tokenType === 'usdc') {
+	// 		paywithUSDC({ args: [destinationAddress, amount] });
+	// 	}
+	// }
 
-	if (hash || txHashUSDT || txHashUSDC) {
-		const selectedHash = hash || txHashUSDT || txHashUSDC;
-		if (selectedHash) {
-			saveTransaction(tokenType, parseFloat(amount), destinationAddress, selectedHash.hash);
-		}
-	}
+	// if (hash || txHashUSDT || txHashUSDC) {
+	// 	const selectedHash = hash || txHashUSDT || txHashUSDC;
+	// 	if (selectedHash) {
+	// 		saveTransaction(tokenType, parseFloat(amount), destinationAddress, selectedHash.hash);
+	// 	}
+	// }
 
-	const handleConnectWithSubstrateModalCancel = () => {
-		setIsShowConnectWithSubstrateModalOpen(false)
-	}
-	const [api, setApi] = useState<ApiPromise | null>(null);
-	const [chainInfo, setChainInfo] = useState('');
-	const [nodeName, setNodeName] = useState('');
+	// const handleConnectWithSubstrateModalCancel = () => {
+	// 	setIsShowConnectWithSubstrateModalOpen(false)
+	// }
+	// const [api, setApi] = useState<ApiPromise | null>(null);
+	// const [chainInfo, setChainInfo] = useState('');
+	// const [nodeName, setNodeName] = useState('');
 
-	useEffect(() => {
-		const connectToSubstrate = async () => {
-			const provider = new WsProvider('wss://rpc.polkadot.io');
-			const substrateApi = await ApiPromise.create({ provider });
-			setApi(substrateApi);
-		};
-		connectToSubstrate();
-	}, []);
+	// useEffect(() => {
+	// 	const connectToSubstrate = async () => {
+	// 		const provider = new WsProvider('wss://rpc.polkadot.io');
+	// 		const substrateApi = await ApiPromise.create({ provider });
+	// 		setApi(substrateApi);
+	// 	};
+	// 	connectToSubstrate();
+	// }, []);
 
-	const getChainInfo = async () => {
-		if (api) {
-			const chain = await api.rpc.system.chain();
-			if (chain) {
-				setChainInfo(chain?.toString())
-			}
-			const nodeName = await api.rpc.system.name();
-			if (nodeName) {
-				setNodeName(nodeName?.toString())
-			}
-			console.log(`Connected to chain ${chain} using ${nodeName}`);
-		}
-	};
+	// const getChainInfo = async () => {
+	// 	if (api) {
+	// 		const chain = await api.rpc.system.chain();
+	// 		if (chain) {
+	// 			setChainInfo(chain?.toString())
+	// 		}
+	// 		const nodeName = await api.rpc.system.name();
+	// 		if (nodeName) {
+	// 			setNodeName(nodeName?.toString())
+	// 		}
+	// 		console.log(`Connected to chain ${chain} using ${nodeName}`);
+	// 	}
+	// };
 
 	return (
 		<>
@@ -298,10 +298,10 @@ export default function NavigationBar() {
 											</Menu>
 
 											<Menu as="div" className="flex relative ml-3">
-												<div>
+												{/* <div>
 													<Menu.Button style={{ marginLeft: '0.35rem' }} className={classNames(classes.link, 'dark:text-white dark:hover:text-[#25c2a0] p-0 md:text-[18px]')}>💰Payment</Menu.Button>
-												</div>
-												<Transition
+												</div> */}
+												{/* <Transition
 													as={Fragment}
 													enter="transition ease-out duration-100"
 													enterFrom="transform opacity-0 scale-95"
@@ -326,7 +326,7 @@ export default function NavigationBar() {
 
 														</Menu.Item>
 													</Menu.Items>
-												</Transition>
+												</Transition> */}
 
 											</Menu>
 
