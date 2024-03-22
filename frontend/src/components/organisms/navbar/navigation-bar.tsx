@@ -1,27 +1,27 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-// import { ApiPromise, WsProvider } from '@polkadot/api';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-// import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { Modal, Space, Select } from 'antd';
 import { IoSettingsSharp } from "react-icons/io5";
-// import { parseEther } from 'viem'
-// import { useSendTransaction, useContractWrite } from 'wagmi'
+import { parseEther } from 'viem'
+import { useSendTransaction, useContractWrite } from 'wagmi'
 import classes from './navigation-bar.module.css';
 import LogoImage from '../../../../public/gif/logo/CubesShufflingGIF.gif'
-// import StripeImage from '../../../../public/img/frontpage/stripe.png'
+import StripeImage from '../../../../public/img/frontpage/stripe.png'
 import MetaMaskImage from '../../../../public/svg/metamask.svg'
-// import * as  erc20ContractABI from '../../../services/token_abi.json';
+import * as  erc20ContractABI from '../../../services/token_abi.json';
 import DiscordIcon from "@/components/atoms/discord-icon";
 import GitHubIcon from "@/components/atoms/github-icon";
 import TwitterIcon from "@/components/atoms/twitter-icon";
 import ThemeToggler from "@/components/templates/theme-toggler";
-// import { saveTransaction } from "@/store/action/transaction.record.action";
+import { saveTransaction } from "@/store/action/transaction.record.action";
 
 
 const user = {
@@ -47,155 +47,155 @@ const community = [
 	{ name: 'Github', href: 'https://github.com/commune-ai' },
 ]
 
-// const userNavigation = [
-// 	{ name: 'Profile', href: '/profile' },
-// 	{ name: 'Settings', href: '#' },
-// ]
+const userNavigation = [
+	{ name: 'Profile', href: '/profile' },
+	{ name: 'Settings', href: '#' },
+]
 
-// const items: MenuProps['items'] = [
-// 	{
-// 		key: '1',
-// 		label: (
-// 			<span rel="noopener noreferrer" className="flex items-center">
-// 				Pay with Stripe
-// 				<Image src={StripeImage} alt="stripeImage" width={24} height={24} className="rounded-md ml-auto" />
-// 			</span>
-// 		),
-// 	},
-// 	{
-// 		key: '2',
-// 		label: (
-// 			<span rel="noopener noreferrer" className="flex items-center" >
-// 				Pay with Wallet
-// 				<Image src={MetaMaskImage} alt="MetaMaskImage" width={24} height={24} className="rounded-md ml-2" />
-// 			</span>
-// 		),
-// 	},
-// ]
+const items: MenuProps['items'] = [
+	{
+		key: '1',
+		label: (
+			<span rel="noopener noreferrer" className="flex items-center">
+				Pay with Stripe
+				<Image src={StripeImage} alt="stripeImage" width={24} height={24} className="rounded-md ml-auto" />
+			</span>
+		),
+	},
+	{
+		key: '2',
+		label: (
+			<span rel="noopener noreferrer" className="flex items-center" >
+				Pay with Wallet
+				<Image src={MetaMaskImage} alt="MetaMaskImage" width={24} height={24} className="rounded-md ml-2" />
+			</span>
+		),
+	},
+]
 
 export default function NavigationBar() {
-	// const [isShowWalletPaymentModal, setIsShowWalletPaymentModal] = useState(false)
+	const [isShowWalletPaymentModal, setIsShowWalletPaymentModal] = useState(false)
 	const [destinationAddress, setDestinationAddress] = useState('')
 	const [amount, setAmount] = useState('')
-	// const [tokenType, setTokenType] = useState('')
-	// const [selectedChain, setSelectedChain] = useState('')
-	// const [isShowConnectWithSubstrateModalOpen, setIsShowConnectWithSubstrateModalOpen] = useState(false)
-	// const asyncStripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
-	// const { abi: erc20ABI } = erc20ContractABI
-	// const router = useRouter();
+	const [tokenType, setTokenType] = useState('')
+	const [selectedChain, setSelectedChain] = useState('')
+	const [isShowConnectWithSubstrateModalOpen, setIsShowConnectWithSubstrateModalOpen] = useState(false)
+	const asyncStripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+	const { abi: erc20ABI } = erc20ContractABI
+	const router = useRouter();
 
-	// const handleClickPayButton = async () => {
-	// 	try {
-	// 		const amount = 1;
-	// 		const stripe = await asyncStripe;
-	// 		const res = await fetch("/api/stripe/session", {
-	// 			method: "POST",
-	// 			body: JSON.stringify({
-	// 				amount,
-	// 			}),
-	// 			headers: { "Content-Type": "application/json" },
-	// 		});
-	// 		const { sessionId } = await res.json();
-	// 		const result = await stripe?.redirectToCheckout({ sessionId });
-	// 		// Check if 'error' exists in the result
-	// 		if (result?.error) {
-	// 			router.push("/error");
-	// 		}
-	// 	} catch (err) {
-	// 		router.push("/error");
-	// 	}
-	// };
+	const handleClickPayButton = async () => {
+		try {
+			const amount = 1;
+			const stripe = await asyncStripe;
+			const res = await fetch("/api/stripe/session", {
+				method: "POST",
+				body: JSON.stringify({
+					amount,
+				}),
+				headers: { "Content-Type": "application/json" },
+			});
+			const { sessionId } = await res.json();
+			const result = await stripe?.redirectToCheckout({ sessionId });
+			// Check if 'error' exists in the result
+			if (result?.error) {
+				router.push("/error");
+			}
+		} catch (err) {
+			router.push("/error");
+		}
+	};
 
-	// const handleMetaMaskPayment = () => {
-	// 	setIsShowWalletPaymentModal(true)
-	// }
+	const handleMetaMaskPayment = () => {
+		setIsShowWalletPaymentModal(true)
+	}
 
-	// const onClick: MenuProps['onClick'] = ({ key }) => {
-	// 	if (key === '1') {
-	// 		handleClickPayButton()
-	// 	}
-	// 	if (key === '2') {
-	// 		handleMetaMaskPayment()
-	// 	}
-	// };
+	const onClick: MenuProps['onClick'] = ({ key }) => {
+		if (key === '1') {
+			handleClickPayButton()
+		}
+		if (key === '2') {
+			handleMetaMaskPayment()
+		}
+	};
 
-	// const handleWalletPaymentModalOpen = () => {
-	// 	setIsShowWalletPaymentModal(false)
-	// }
+	const handleWalletPaymentModalOpen = () => {
+		setIsShowWalletPaymentModal(false)
+	}
 
-	// const handleChange = (value: string) => {
-	// 	setTokenType(value)
-	// };
+	const handleChange = (value: string) => {
+		setTokenType(value)
+	};
 
-	// const { data: hash, sendTransaction } = useSendTransaction()
+	const { data: hash, sendTransaction } = useSendTransaction()
 
-	// const { data: txHashUSDT, write: paywithUSDT } = useContractWrite({
-	// 	address: '0x28B3071bE7A6E4B3bE2b36D78a29b6e4DbBdDb74',
-	// 	abi: erc20ABI,
-	// 	functionName: 'transfer'
-	// })
+	const { data: txHashUSDT, write: paywithUSDT } = useContractWrite({
+		address: '0x28B3071bE7A6E4B3bE2b36D78a29b6e4DbBdDb74',
+		abi: erc20ABI,
+		functionName: 'transfer'
+	})
 
-	// const { data: txHashUSDC, write: paywithUSDC } = useContractWrite({
-	// 	address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-	// 	abi: erc20ABI,
-	// 	functionName: 'transfer'
-	// })
+	const { data: txHashUSDC, write: paywithUSDC } = useContractWrite({
+		address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+		abi: erc20ABI,
+		functionName: 'transfer'
+	})
 
-	// const handlePayWithWallet = () => {
-	// 	if (tokenType === 'eth') {
-	// 		sendTransaction({ to: destinationAddress, value: parseEther(amount) })
-	// 	}
-	// 	if (tokenType === 'matic') {
-	// 		if (selectedChain !== 'Polygon') {
-	// 			window.alert('Please change your chain to Polygon')
-	// 		} else {
-	// 			sendTransaction({ to: destinationAddress, value: parseEther(amount) })
-	// 		}
-	// 	}
-	// 	if (tokenType === 'usdt') {
-	// 		paywithUSDT({ args: [destinationAddress, amount] });
-	// 	}
-	// 	if (tokenType === 'usdc') {
-	// 		paywithUSDC({ args: [destinationAddress, amount] });
-	// 	}
-	// }
+	const handlePayWithWallet = () => {
+		if (tokenType === 'eth') {
+			sendTransaction({ to: destinationAddress, value: parseEther(amount) })
+		}
+		if (tokenType === 'matic') {
+			if (selectedChain !== 'Polygon') {
+				window.alert('Please change your chain to Polygon')
+			} else {
+				sendTransaction({ to: destinationAddress, value: parseEther(amount) })
+			}
+		}
+		if (tokenType === 'usdt') {
+			paywithUSDT({ args: [destinationAddress, amount] });
+		}
+		if (tokenType === 'usdc') {
+			paywithUSDC({ args: [destinationAddress, amount] });
+		}
+	}
 
-	// if (hash || txHashUSDT || txHashUSDC) {
-	// 	const selectedHash = hash || txHashUSDT || txHashUSDC;
-	// 	if (selectedHash) {
-	// 		saveTransaction(tokenType, parseFloat(amount), destinationAddress, selectedHash.hash);
-	// 	}
-	// }
+	if (hash || txHashUSDT || txHashUSDC) {
+		const selectedHash = hash || txHashUSDT || txHashUSDC;
+		if (selectedHash) {
+			saveTransaction(tokenType, parseFloat(amount), destinationAddress, selectedHash.hash);
+		}
+	}
 
-	// const handleConnectWithSubstrateModalCancel = () => {
-	// 	setIsShowConnectWithSubstrateModalOpen(false)
-	// }
-	// const [api, setApi] = useState<ApiPromise | null>(null);
-	// const [chainInfo, setChainInfo] = useState('');
-	// const [nodeName, setNodeName] = useState('');
+	const handleConnectWithSubstrateModalCancel = () => {
+		setIsShowConnectWithSubstrateModalOpen(false)
+	}
+	const [api, setApi] = useState<ApiPromise | null>(null);
+	const [chainInfo, setChainInfo] = useState('');
+	const [nodeName, setNodeName] = useState('');
 
-	// useEffect(() => {
-	// 	const connectToSubstrate = async () => {
-	// 		const provider = new WsProvider('wss://rpc.polkadot.io');
-	// 		const substrateApi = await ApiPromise.create({ provider });
-	// 		setApi(substrateApi);
-	// 	};
-	// 	connectToSubstrate();
-	// }, []);
+	useEffect(() => {
+		const connectToSubstrate = async () => {
+			const provider = new WsProvider('wss://rpc.polkadot.io');
+			const substrateApi = await ApiPromise.create({ provider });
+			setApi(substrateApi);
+		};
+		connectToSubstrate();
+	}, []);
 
-	// const getChainInfo = async () => {
-	// 	if (api) {
-	// 		const chain = await api.rpc.system.chain();
-	// 		if (chain) {
-	// 			setChainInfo(chain?.toString())
-	// 		}
-	// 		const nodeName = await api.rpc.system.name();
-	// 		if (nodeName) {
-	// 			setNodeName(nodeName?.toString())
-	// 		}
-	// 		console.log(`Connected to chain ${chain} using ${nodeName}`);
-	// 	}
-	// };
+	const getChainInfo = async () => {
+		if (api) {
+			const chain = await api.rpc.system.chain();
+			if (chain) {
+				setChainInfo(chain?.toString())
+			}
+			const nodeName = await api.rpc.system.name();
+			if (nodeName) {
+				setNodeName(nodeName?.toString())
+			}
+			console.log(`Connected to chain ${chain} using ${nodeName}`);
+		}
+	};
 
 	return (
 		<>
