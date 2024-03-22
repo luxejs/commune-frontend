@@ -14,7 +14,7 @@ import { parseEther } from 'viem'
 import { useSendTransaction, useContractWrite } from 'wagmi'
 import classes from './navigation-bar.module.css';
 import LogoImage from '../../../../public/gif/logo/CubesShufflingGIF.gif'
-import StripeImage from '../../../../public/img/frontpage/stripe.png'
+// import StripeImage from '../../../../public/img/frontpage/stripe.png'
 import MetaMaskImage from '../../../../public/svg/metamask.svg'
 import * as  erc20ContractABI from '../../../services/token_abi.json';
 import DiscordIcon from "@/components/atoms/discord-icon";
@@ -84,31 +84,31 @@ export default function NavigationBar() {
 	const { abi: erc20ABI } = erc20ContractABI
 	const router = useRouter();
 
-	const handleClickPayButton = async () => {
-		try {
-			const amount = 1;
-			const stripe = await asyncStripe;
-			const res = await fetch("/api/stripe/session", {
-				method: "POST",
-				body: JSON.stringify({
-					amount,
-				}),
-				headers: { "Content-Type": "application/json" },
-			});
-			const { sessionId } = await res.json();
-			const result = await stripe?.redirectToCheckout({ sessionId });
-			// Check if 'error' exists in the result
-			if (result?.error) {
-				router.push("/error");
-			}
-		} catch (err) {
-			router.push("/error");
-		}
-	};
+	// const handleClickPayButton = async () => {
+	// 	try {
+	// 		const amount = 1;
+	// 		const stripe = await asyncStripe;
+	// 		const res = await fetch("/api/stripe/session", {
+	// 			method: "POST",
+	// 			body: JSON.stringify({
+	// 				amount,
+	// 			}),
+	// 			headers: { "Content-Type": "application/json" },
+	// 		});
+	// 		const { sessionId } = await res.json();
+	// 		const result = await stripe?.redirectToCheckout({ sessionId });
+	// 		// Check if 'error' exists in the result
+	// 		if (result?.error) {
+	// 			router.push("/error");
+	// 		}
+	// 	} catch (err) {
+	// 		router.push("/error");
+	// 	}
+	// };
 
-	const handleMetaMaskPayment = () => {
-		setIsShowWalletPaymentModal(true)
-	}
+	// const handleMetaMaskPayment = () => {
+	// 	setIsShowWalletPaymentModal(true)
+	// }
 
 	// const onClick: MenuProps['onClick'] = ({ key }) => {
 	// 	if (key === '1') {
